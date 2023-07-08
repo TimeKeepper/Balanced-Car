@@ -1,0 +1,521 @@
+{
+  "name": "template",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    ".eide/deps",
+    ".vscode"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "APP",
+        "files": [
+          {
+            "path": "APP/led.c"
+          },
+          {
+            "path": "APP/OLED.c"
+          },
+          {
+            "path": "APP/Motor.c"
+          },
+          {
+            "path": "APP/Beep.c"
+          },
+          {
+            "path": "APP/DHT11.c"
+          },
+          {
+            "path": "APP/hsr04.c"
+          },
+          {
+            "path": "APP/hwyk.c"
+          },
+          {
+            "path": "APP/PID.c"
+          },
+          {
+            "path": "APP/MPU6050/Kalman_Filter.c"
+          },
+          {
+            "path": "APP/led.h"
+          },
+          {
+            "path": "APP/OLED.h"
+          },
+          {
+            "path": "APP/OLED_Font.h"
+          },
+          {
+            "path": "APP/Motor.h"
+          },
+          {
+            "path": "APP/Beep.h"
+          },
+          {
+            "path": "APP/DHT11.h"
+          },
+          {
+            "path": "APP/hsr04.h"
+          },
+          {
+            "path": "APP/hwyk.h"
+          },
+          {
+            "path": "APP/PID.h"
+          },
+          {
+            "path": "APP/MPU6050/Kalman_Filter.h"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Library",
+        "files": [
+          {
+            "path": "Library/misc.c"
+          },
+          {
+            "path": "Library/stm32f10x_adc.c"
+          },
+          {
+            "path": "Library/stm32f10x_bkp.c"
+          },
+          {
+            "path": "Library/stm32f10x_can.c"
+          },
+          {
+            "path": "Library/stm32f10x_cec.c"
+          },
+          {
+            "path": "Library/stm32f10x_crc.c"
+          },
+          {
+            "path": "Library/stm32f10x_dac.c"
+          },
+          {
+            "path": "Library/stm32f10x_dbgmcu.c"
+          },
+          {
+            "path": "Library/stm32f10x_dma.c"
+          },
+          {
+            "path": "Library/stm32f10x_exti.c"
+          },
+          {
+            "path": "Library/stm32f10x_flash.c"
+          },
+          {
+            "path": "Library/stm32f10x_fsmc.c"
+          },
+          {
+            "path": "Library/stm32f10x_gpio.c"
+          },
+          {
+            "path": "Library/stm32f10x_i2c.c"
+          },
+          {
+            "path": "Library/stm32f10x_iwdg.c"
+          },
+          {
+            "path": "Library/stm32f10x_pwr.c"
+          },
+          {
+            "path": "Library/stm32f10x_rcc.c"
+          },
+          {
+            "path": "Library/stm32f10x_rtc.c"
+          },
+          {
+            "path": "Library/stm32f10x_sdio.c"
+          },
+          {
+            "path": "Library/stm32f10x_spi.c"
+          },
+          {
+            "path": "Library/stm32f10x_tim.c"
+          },
+          {
+            "path": "Library/stm32f10x_usart.c"
+          },
+          {
+            "path": "Library/stm32f10x_wwdg.c"
+          },
+          {
+            "path": "Library/misc.h"
+          },
+          {
+            "path": "Library/stm32f10x_adc.h"
+          },
+          {
+            "path": "Library/stm32f10x_bkp.h"
+          },
+          {
+            "path": "Library/stm32f10x_can.h"
+          },
+          {
+            "path": "Library/stm32f10x_cec.h"
+          },
+          {
+            "path": "Library/stm32f10x_crc.h"
+          },
+          {
+            "path": "Library/stm32f10x_dac.h"
+          },
+          {
+            "path": "Library/stm32f10x_dbgmcu.h"
+          },
+          {
+            "path": "Library/stm32f10x_dma.h"
+          },
+          {
+            "path": "Library/stm32f10x_exti.h"
+          },
+          {
+            "path": "Library/stm32f10x_flash.h"
+          },
+          {
+            "path": "Library/stm32f10x_fsmc.h"
+          },
+          {
+            "path": "Library/stm32f10x_gpio.h"
+          },
+          {
+            "path": "Library/stm32f10x_i2c.h"
+          },
+          {
+            "path": "Library/stm32f10x_iwdg.h"
+          },
+          {
+            "path": "Library/stm32f10x_pwr.h"
+          },
+          {
+            "path": "Library/stm32f10x_rcc.h"
+          },
+          {
+            "path": "Library/stm32f10x_rtc.h"
+          },
+          {
+            "path": "Library/stm32f10x_sdio.h"
+          },
+          {
+            "path": "Library/stm32f10x_spi.h"
+          },
+          {
+            "path": "Library/stm32f10x_tim.h"
+          },
+          {
+            "path": "Library/stm32f10x_usart.h"
+          },
+          {
+            "path": "Library/stm32f10x_wwdg.h"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "mpu6050",
+        "files": [
+          {
+            "path": "APP/MPU6050/mpu6050.c"
+          },
+          {
+            "path": "APP/MPU6050/mpuiic.c"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/inv_mpu.c"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/inv_mpu_dmp_motion_driver.c"
+          },
+          {
+            "path": "APP/MPU6050/mpu6050.h"
+          },
+          {
+            "path": "APP/MPU6050/mpuiic.h"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/dmpKey.h"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/dmpmap.h"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/inv_mpu.h"
+          },
+          {
+            "path": "APP/MPU6050/eMPL/inv_mpu_dmp_motion_driver.h"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Start",
+        "files": [
+          {
+            "path": "Start/core_cm3.h"
+          },
+          {
+            "path": "Start/startup_stm32f10x_md.s"
+          },
+          {
+            "path": "Start/stm32f10x.h"
+          },
+          {
+            "path": "Start/system_stm32f10x.c"
+          },
+          {
+            "path": "Start/system_stm32f10x.h"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "System",
+        "files": [
+          {
+            "path": "System/system.c"
+          },
+          {
+            "path": "System/Systick.c"
+          },
+          {
+            "path": "System/Timer.c"
+          },
+          {
+            "path": "System/Tim_IC.c"
+          },
+          {
+            "path": "System/AD.c"
+          },
+          {
+            "path": "System/usart.c"
+          },
+          {
+            "path": "System/DA.c"
+          },
+          {
+            "path": "System/system.h"
+          },
+          {
+            "path": "System/Systick.h"
+          },
+          {
+            "path": "System/Timer.h"
+          },
+          {
+            "path": "System/Tim_IC.h"
+          },
+          {
+            "path": "System/AD.h"
+          },
+          {
+            "path": "System/usart.h"
+          },
+          {
+            "path": "System/DA.h"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "User",
+        "files": [
+          {
+            "path": "User/main.c"
+          },
+          {
+            "path": "User/stm32f10x_conf.h"
+          },
+          {
+            "path": "User/stm32f10x_it.c"
+          },
+          {
+            "path": "User/stm32f10x_it.h"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "4d7139f657b628ad043fc65f46af2ca2"
+  },
+  "targets": {
+    "Target 1": {
+      "excludeList": [],
+      "toolchain": "AC6",
+      "compileConfig": {
+        "cpuType": "Cortex-M3",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "",
+        "useCustomScatterFile": false,
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": true
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "OpenOCD",
+      "uploadConfig": {
+        "bin": "",
+        "target": "stm32f1x",
+        "interface": "stlink",
+        "baseAddr": "0x08000000"
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        },
+        "STLink": {
+          "bin": "",
+          "proType": "SWD",
+          "resetMode": "default",
+          "runAfterProgram": true,
+          "speed": 4000,
+          "address": "0x0",
+          "elFile": "None",
+          "optionBytes": ".eide/target 1.st.option.bytes.ini",
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "Start",
+          "Library",
+          "User",
+          "System",
+          "APP",
+          "APP/MPU6050/eMPL",
+          "APP/MPU6050",
+          "RTE/_Target 1",
+          ".eide/deps"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": [
+          "USE_STDPERIPH_DRIVER"
+        ]
+      }
+    }
+  },
+  "version": "3.3"
+}

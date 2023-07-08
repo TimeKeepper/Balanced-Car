@@ -1,0 +1,16 @@
+{
+    "clangd.fallbackFlags": [
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\Start",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\Library",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\User",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\System",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\APP",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\APP\\MPU6050\\eMPL",
+        "-Ie:\\项目\\mine\\Balanced-Car\\code\\APP\\MPU6050",
+        "-IG:\\Keil_v5\\ARM\\ARMCLANG\\include",
+        "-IG:\\Keil_v5\\ARM\\ARMCLANG\\include\\arm_linux",
+        "-IG:\\Keil_v5\\ARM\\ARMCLANG\\include\\arm_linux_compat",
+        "-IG:\\Keil_v5\\ARM\\ARMCLANG\\include\\libcxx",
+    ]
+    
+}
