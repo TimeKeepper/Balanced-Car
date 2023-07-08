@@ -1,0 +1,64 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "clangd.fallbackFlags": [
+            "-DSTM32F10X_MD",
+            "-DUSE_STDPERIPH_DRIVER",
+            "-Le:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver/inc",
+            "-Le:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver/src",
+            "-Le:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver",
+            "-Le:/project/mine/Balanced-Car/code/lib/cmsis",
+            "-Le:/project/mine/Balanced-Car/code/src",
+            "-Le:/project/mine/Balanced-Car/code/src/system",
+            "-Le:/project/mine/Balanced-Car/code/src/app",
+            "-Ie:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver/inc",
+            "-Ie:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver/src",
+            "-Ie:/project/mine/Balanced-Car/code/hal/STM32F10x_StdPeriph_Driver",
+            "-Ie:/project/mine/Balanced-Car/code/lib/cmsis",
+            "-Ie:/project/mine/Balanced-Car/code/src",
+            "-Ie:/project/mine/Balanced-Car/code/src/system",
+            "-Ie:/project/mine/Balanced-Car/code/src/app"
+        ],
+        "EIDE.SourceTree.AutoSearchIncludePath": true,
+        "EIDE.SourceTree.AutoSearchObjFile": true,
+        "files.associations": {
+            ".eideignore": "ignore",
+            "*.a51": "a51",
+            "*.h": "c",
+            "*.c": "c",
+            "*.hxx": "cpp",
+            "*.hpp": "cpp",
+            "*.c++": "cpp",
+            "*.cpp": "cpp",
+            "*.cxx": "cpp",
+            "*.cc": "cpp"
+        },
+        "files.autoGuessEncoding": true,
+        "C_Cpp.default.configurationProvider": "cl.eide",
+        "C_Cpp.errorSquiggles": "disabled",
+        "[yaml]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "editor.autoIndent": "advanced"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "cl.eide",
+            "keroc.hex-fmt",
+            "xiaoyongdong.srecord",
+            "hars.cppsnippets",
+            "zixuanwang.linkerscript",
+            "redhat.vscode-yaml",
+            "IBM.output-colorizer",
+            "cschlosser.doxdocgen",
+            "ms-vscode.vscode-serial-monitor",
+            "dan-c-underwood.arm",
+            "marus25.cortex-debug"
+        ]
+    }
+}
