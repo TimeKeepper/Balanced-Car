@@ -51,7 +51,7 @@ void HSR04_Init(GPIO_TypeDef * Trig_PORT, u16 Trig_Pin, GPIO_TypeDef * Echo_PORT
 
 void HSR04_Start(void){
     GPIO_SetBits(LOC_Trig_PORT, LOC_Trig_Pin);
-    delay_us(20);
+    delay_us(30);
     GPIO_ResetBits(LOC_Trig_PORT, LOC_Trig_Pin);
 }
 
@@ -59,7 +59,7 @@ uint32_t HSR04_Get_Distance_cm(void){
     return LOC_Final_Distance;
 }
 
-void When_EXTI_Interrupt(void){
+void HSR_When_EXTI_Interrupt(void){
     uint32_t HSR_EXTI_LINE = GET_EXTI_LINE(LOC_Echo_Pin);
     if(EXTI_GetITStatus(HSR_EXTI_LINE) != RESET){
         EXTI_ClearITPendingBit(HSR_EXTI_LINE);
@@ -73,7 +73,7 @@ void When_EXTI_Interrupt(void){
     }
 }
 
-void When_TIM_Interrupt(void){
+void HSR_When_TIM_Interrupt(void){
     if(TIM_GetITStatus(LOC_TIMx, TIM_IT_Update) != RESET){
         TIM_ClearITPendingBit(LOC_TIMx, TIM_IT_Update);
         LOC_Distance_count++;

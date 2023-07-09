@@ -318,17 +318,18 @@ void OLED_I2C_Init(GPIO_TypeDef * OLED_SCL_PORT, uint16_t OLED_SCL_Pin, GPIO_Typ
 
 void OLED_I2C_Start(void)
 {
-	OLED_W_SDA(1);
-	OLED_W_SCL(1);
-	OLED_W_SDA(0);
-	OLED_W_SCL(0);
+    OLED_W_SDA(1);
+    OLED_W_SCL(1);
+    OLED_W_SDA(0);
+    OLED_W_SCL(0);
 }
 
 void OLED_I2C_Stop(void)
 {
-	OLED_W_SDA(0);
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
+    OLED_W_SCL(0);
+    OLED_W_SDA(0);
+    OLED_W_SCL(1);
+    OLED_W_SDA(1);
 }
 
 void OLED_I2C_SendByte(uint8_t Byte)
@@ -337,11 +338,16 @@ void OLED_I2C_SendByte(uint8_t Byte)
 	for (i = 0; i < 8; i++)
 	{
 		OLED_W_SDA(Byte & (0x80 >> i));
+        delay_us(2);
 		OLED_W_SCL(1);
+        delay_us(2);
 		OLED_W_SCL(0);
+        delay_us(2);
 	}
 	OLED_W_SCL(1);	
+    delay_us(2);
 	OLED_W_SCL(0);
+    delay_us(2);
 }
 
 void OLED_WriteCommand(uint8_t Command)
