@@ -2,8 +2,7 @@
 #include "GP_Tim.h"
 #include "led.h"
 #include "OLED.h"
-
-static int TIMIT_Count = 0;
+#include "hsr04.h"
 
 int main()
 {
@@ -11,19 +10,19 @@ int main()
     SysTick_Init(72);
     LED_Init(GPIOC, GPIO_Pin_13);
     OLED_Init(GPIOB, GPIO_Pin_8, GPIOB, GPIO_Pin_9);
-    GP_Timer_IT_Init(TIM3);
+    HSR04_Init(GPIOB, GPIO_Pin_12, GPIOB, GPIO_Pin_13, TIM2);
     while(1){
-        if(TIMIT_Count >= 100){
-            TIMIT_Count = 0;
-            LED1 = !LED1;
-        }
+        HSR04_Start();
+        delay_ms(109);
+        OLED_ShowNum(1, 1, HSR04_Get_Distance_cm(), 15);
     }
     return 0;
 }
 
-void TIM3_IRQHandler(void){
-    if(TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET){
-        TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-        TIMIT_Count++;
-    }
+void TIM2_IRQHandler(void){ 
+    When_TIM_Interrupt();
+}
+
+void EXTI15_10_IRQHandler(void){
+    When_EXTI_Interrupt();
 }

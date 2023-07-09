@@ -137,16 +137,25 @@ uint8_t GET_EXTI_IRQn(uint32_t GPIO_Pin){
         case GPIO_Pin_4:
             return EXTI4_IRQn;
         case GPIO_Pin_5:
+            return EXTI9_5_IRQn;
         case GPIO_Pin_6:
+            return EXTI9_5_IRQn;
         case GPIO_Pin_7:
+            return EXTI9_5_IRQn;
         case GPIO_Pin_8:
+            return EXTI9_5_IRQn;
         case GPIO_Pin_9:
             return EXTI9_5_IRQn;
         case GPIO_Pin_10:
+            return EXTI15_10_IRQn;
         case GPIO_Pin_11:
+            return EXTI15_10_IRQn;
         case GPIO_Pin_12:
+            return EXTI15_10_IRQn;
         case GPIO_Pin_13:
+            return EXTI15_10_IRQn;
         case GPIO_Pin_14:
+            return EXTI15_10_IRQn;
         case GPIO_Pin_15:
             return EXTI15_10_IRQn;
         default:

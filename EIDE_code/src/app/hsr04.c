@@ -10,7 +10,7 @@ static TIM_TypeDef * LOC_TIMx = 0;
 //static variables which save the distance value
 static uint32_t LOC_Distance = 0;
 static uint32_t LOC_Distance_count = 0;
-static float LOC_Final_Distance = 0;
+static uint32_t LOC_Final_Distance = 0;
 
 void HSR04_Init(GPIO_TypeDef * Trig_PORT, u16 Trig_Pin, GPIO_TypeDef * Echo_PORT, u16 Echo_Pin, TIM_TypeDef * TIMx){
     LOC_Trig_PORT = Trig_PORT;
@@ -18,6 +18,8 @@ void HSR04_Init(GPIO_TypeDef * Trig_PORT, u16 Trig_Pin, GPIO_TypeDef * Echo_PORT
     LOC_Echo_PORT = Echo_PORT;
     LOC_Echo_Pin = Echo_Pin;
     LOC_TIMx = TIMx;
+
+    GP_Timer_IT_Init(LOC_TIMx);
 
     GPIO_RCC_ENABLE(Trig_PORT);GPIO_RCC_ENABLE(Echo_PORT);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
@@ -53,11 +55,11 @@ void HSR04_Start(void){
     GPIO_ResetBits(LOC_Trig_PORT, LOC_Trig_Pin);
 }
 
-float HSR04_Get_Distance_cm(void){
+uint32_t HSR04_Get_Distance_cm(void){
     return LOC_Final_Distance;
 }
 
-void EXTI15_10_IRQHandler(void){
+void When_EXTI_Interrupt(void){
     uint32_t HSR_EXTI_LINE = GET_EXTI_LINE(LOC_Echo_Pin);
     if(EXTI_GetITStatus(HSR_EXTI_LINE) != RESET){
         EXTI_ClearITPendingBit(HSR_EXTI_LINE);
@@ -74,5 +76,6 @@ void EXTI15_10_IRQHandler(void){
 void When_TIM_Interrupt(void){
     if(TIM_GetITStatus(LOC_TIMx, TIM_IT_Update) != RESET){
         TIM_ClearITPendingBit(LOC_TIMx, TIM_IT_Update);
+        LOC_Distance_count++;
     }
 }
