@@ -1,6 +1,5 @@
 #include "OLED.h"
 
-
 const uint8_t OLED_F8x16[][16]={
 	{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}//  0
@@ -288,79 +287,176 @@ const uint8_t OLED_F8x16[][16]={
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}//~ 94
 };
 
-void OLED_IIC_Init(GPIO_TypeDef * SCL_PORT, u16 SCL_Pin, GPIO_TypeDef * SDA_PORT, u16 SDA_Pin){
-    IOIIC_Init(SCL_PORT, SCL_Pin, SDA_PORT, SDA_Pin);
+static GPIO_TypeDef * LOC_OLED_SCL_PORT = 0;
+static uint16_t LOC_OLED_SCL_Pin = 0;
+static GPIO_TypeDef * LOC_OLED_SDA_PORT = 0;
+static uint16_t LOC_OLED_SDA_Pin = 0;
+
+#define OLED_W_SCL(x)		GPIO_WriteBit(LOC_OLED_SCL_PORT, LOC_OLED_SCL_Pin, (BitAction)(x))
+#define OLED_W_SDA(x)		GPIO_WriteBit(LOC_OLED_SDA_PORT, LOC_OLED_SDA_Pin, (BitAction)(x))
+
+void OLED_I2C_Init(GPIO_TypeDef * OLED_SCL_PORT, uint16_t OLED_SCL_Pin, GPIO_TypeDef * OLED_SDA_PORT, uint16_t OLED_SDA_Pin)
+{
+    LOC_OLED_SCL_PORT = OLED_SCL_PORT;
+    LOC_OLED_SCL_Pin = OLED_SCL_Pin;
+    LOC_OLED_SDA_PORT = OLED_SDA_PORT;
+    LOC_OLED_SDA_Pin = OLED_SDA_Pin;
+    GPIO_RCC_ENABLE(OLED_SCL_PORT);
+    GPIO_RCC_ENABLE(OLED_SDA_PORT);
+	
+	GPIO_InitTypeDef GPIO_InitStructure;
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Pin = OLED_SCL_Pin;
+ 	GPIO_Init(OLED_SCL_PORT, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = OLED_SDA_Pin;
+ 	GPIO_Init(OLED_SDA_PORT, &GPIO_InitStructure);
+	
+	OLED_W_SCL(1);
+	OLED_W_SDA(1);
 }
 
-void OLED_WriteCommand(uint8_t Command){
-    IOIIC_Start();
-    IOIIC_W_Byte(0x78);
-    IOIIC_W_Byte(0x00);
-    IOIIC_W_Byte(Command);
-    IOIIC_Stop();
+void OLED_I2C_Start(void)
+{
+	OLED_W_SDA(1);
+	OLED_W_SCL(1);
+	OLED_W_SDA(0);
+	OLED_W_SCL(0);
 }
 
-void OLED_WriteData(uint8_t Data){
-    IOIIC_Start();
-    IOIIC_W_Byte(0x78);
-    IOIIC_W_Byte(0x40);
-    IOIIC_W_Byte(Data);
-    IOIIC_Stop();
+void OLED_I2C_Stop(void)
+{
+	OLED_W_SDA(0);
+	OLED_W_SCL(1);
+	OLED_W_SDA(1);
 }
 
-void OLED_SetCursor(uint8_t Y,uint8_t X){
-    OLED_WriteCommand(0xb0|Y);
-    OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4));
-    OLED_WriteCommand(0x00 | (X & 0x0F));
+void OLED_I2C_SendByte(uint8_t Byte)
+{
+	uint8_t i;
+	for (i = 0; i < 8; i++)
+	{
+		OLED_W_SDA(Byte & (0x80 >> i));
+		OLED_W_SCL(1);
+		OLED_W_SCL(0);
+	}
+	OLED_W_SCL(1);	
+	OLED_W_SCL(0);
 }
 
-void OLED_Clear(void){
-    uint8_t i,n;
-    for(i=0;i<8;i++){
-        OLED_SetCursor(i,0);
-        for(n=0;n<128;n++)OLED_WriteData(0);
-    }
+void OLED_WriteCommand(uint8_t Command)
+{
+	OLED_I2C_Start();
+	OLED_I2C_SendByte(0x78);		
+	OLED_I2C_SendByte(0x00);		
+	OLED_I2C_SendByte(Command); 
+	OLED_I2C_Stop();
 }
 
-void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char){
-    uint8_t i;
-    OLED_SetCursor((Line - 1) * 2, (Column - 1) * 8);
-    for(i=0;i<8;i++)OLED_WriteData(OLED_F8x16[Char - ' '][i]);
-    OLED_SetCursor((Line - 1) * 2 + 1, (Column - 1) * 8);
-    for(i=0;i<8;i++)OLED_WriteData(OLED_F8x16[Char - ' '][i + 8]);
+void OLED_WriteData(uint8_t Data)
+{
+	OLED_I2C_Start();
+	OLED_I2C_SendByte(0x78);		
+	OLED_I2C_SendByte(0x40);		
+	OLED_I2C_SendByte(Data);
+	OLED_I2C_Stop();
 }
 
-void OLED_ShowString(uint8_t Line, uint8_t Column, char * String){
-    uint8_t i;
-    for(i=0;String[i]!='\0';i++)OLED_ShowChar(Line, Column + i, String[i]);
+void OLED_SetCursor(uint8_t Y, uint8_t X)
+{
+	OLED_WriteCommand(0xB0 | Y);					
+	OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4));	
+	OLED_WriteCommand(0x00 | (X & 0x0F));			
 }
 
-static uint32_t Pow(uint32_t x,uint32_t y){
-    uint32_t result = 1;
-    while(y--) result *= x;
-    return result;
+void OLED_Clear(void)
+{  
+	uint8_t i, j;
+	for (j = 0; j < 8; j++)
+	{
+		OLED_SetCursor(j, 0);
+		for(i = 0; i < 128; i++)
+		{
+			OLED_WriteData(0x00);
+		}
+	}
 }
 
-void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Num, uint8_t Length){
-    uint8_t i;
-    for(i=0;i<Length;i++) OLED_ShowChar(Line, Column + Length - i, (Num / Pow(10, i)) % 10 + '0');
+void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char)
+{      	
+	uint8_t i;
+	OLED_SetCursor((Line - 1) * 2, (Column - 1) * 8);	
+	for (i = 0; i < 8; i++)
+	{
+		OLED_WriteData(OLED_F8x16[Char - ' '][i]);		
+	}
+	OLED_SetCursor((Line - 1) * 2 + 1, (Column - 1) * 8);	
+	for (i = 0; i < 8; i++)
+	{
+		OLED_WriteData(OLED_F8x16[Char - ' '][i + 8]);	
+	}
 }
 
-void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Num, uint8_t Length){
-    if(Num >= 0){OLED_ShowNum(Line, Column, Num, Length);return;}
-    OLED_ShowChar(Line, Column, '-');
-    OLED_ShowNum(Line, Column + 1, -Num, Length - 1);
+void OLED_ShowString(uint8_t Line, uint8_t Column, char *String)
+{
+	uint8_t i;
+	for (i = 0; String[i] != '\0'; i++)
+	{
+		OLED_ShowChar(Line, Column + i, String[i]);
+	}
 }
 
-void OLED_Init(GPIO_TypeDef * SCL_PORT, u16 SCL_Pin, GPIO_TypeDef * SDA_PORT, u16 SDA_Pin)
+uint32_t OLED_Pow(uint32_t X, uint32_t Y)
+{
+	uint32_t Result = 1;
+	while (Y--)
+	{
+		Result *= X;
+	}
+	return Result;
+}
+
+void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
+{
+	uint8_t i;
+	for (i = 0; i < Length; i++)							
+	{
+		OLED_ShowChar(Line, Column + i, Number / OLED_Pow(10, Length - i - 1) % 10 + '0');
+	}
+}
+
+void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number, uint8_t Length)
+{
+	uint8_t i;
+	uint32_t Number1;
+	if (Number >= 0)
+	{
+		OLED_ShowChar(Line, Column, '+');
+		Number1 = Number;
+	}
+	else
+	{
+		OLED_ShowChar(Line, Column, '-');
+		Number1 = -Number;
+	}
+	for (i = 0; i < Length; i++)							
+	{
+		OLED_ShowChar(Line, Column + i + 1, Number1 / OLED_Pow(10, Length - i - 1) % 10 + '0');
+	}
+}
+
+void OLED_Init(GPIO_TypeDef * OLED_SCL_PORT, uint16_t OLED_SCL_Pin, GPIO_TypeDef * OLED_SDA_PORT, uint16_t OLED_SDA_Pin)
 {
 	uint32_t i, j;
 	
-	for (i = 0; i < 1000; i++) for (j = 0; j < 1000; j++);
+	for (i = 0; i < 1000; i++)			
+	{
+		for (j = 0; j < 1000; j++);
+	}
 	
-	OLED_IIC_Init(SCL_PORT, SCL_Pin, SDA_PORT, SDA_Pin);		
+	OLED_I2C_Init(OLED_SCL_PORT,OLED_SCL_Pin,OLED_SDA_PORT,OLED_SDA_Pin);		
 	
-	OLED_WriteCommand(0xAE);	
+	OLED_WriteCommand(0xAE);
 	
 	OLED_WriteCommand(0xD5);	
 	OLED_WriteCommand(0x80);
@@ -375,7 +471,7 @@ void OLED_Init(GPIO_TypeDef * SCL_PORT, u16 SCL_Pin, GPIO_TypeDef * SDA_PORT, u1
 	
 	OLED_WriteCommand(0xA1);	
 	
-	OLED_WriteCommand(0xC8);	
+	OLED_WriteCommand(0xC8);
 
 	OLED_WriteCommand(0xDA);	
 	OLED_WriteCommand(0x12);
@@ -386,17 +482,17 @@ void OLED_Init(GPIO_TypeDef * SCL_PORT, u16 SCL_Pin, GPIO_TypeDef * SDA_PORT, u1
 	OLED_WriteCommand(0xD9);	
 	OLED_WriteCommand(0xF1);
 
-	OLED_WriteCommand(0xDB);
+	OLED_WriteCommand(0xDB);	
 	OLED_WriteCommand(0x30);
 
-	OLED_WriteCommand(0xA4);	
+	OLED_WriteCommand(0xA4);
 
-	OLED_WriteCommand(0xA6);
+	OLED_WriteCommand(0xA6);	
 
 	OLED_WriteCommand(0x8D);	
 	OLED_WriteCommand(0x14);
 
 	OLED_WriteCommand(0xAF);	
 		
-	OLED_Clear();				
+	OLED_Clear();			
 }

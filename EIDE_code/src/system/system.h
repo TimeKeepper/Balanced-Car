@@ -12,7 +12,6 @@
 #include "stm32f10x_tim.h"
 #include "stm32f10x_exti.h"
 
-typedef enum {FALSE = 0, TRUE = !FALSE} bool; // define for stm32 which doesn't have bool's defination
 //annoying clangd always marks some code segments as errors that are not problematic in embedded programming:(
 
 #define mine_PI    3.14159265358979323846
