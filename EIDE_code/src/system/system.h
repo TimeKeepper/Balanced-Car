@@ -11,6 +11,7 @@
 #include "stm32f10x_adc.h"
 #include "stm32f10x_tim.h"
 #include "stm32f10x_exti.h"
+#include "stm32f10x_i2c.h"
 
 //annoying clangd always marks some code segments as errors that are not problematic in embedded programming:(
 

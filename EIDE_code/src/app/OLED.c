@@ -1,6 +1,6 @@
 #include "OLED.h"
 
-const uint8_t OLED_F8x16[][16]={
+const uint8_t OLED_F8x16[][16]={                                                  //ASCII
 	{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}//  0
 	,
@@ -345,7 +345,7 @@ void OLED_I2C_SendByte(uint8_t Byte)
         delay_us(2);
 	}
 	OLED_W_SCL(1);	
-    delay_us(2);
+    delay_us(2);//delay for GD32 because it's higher frequency
 	OLED_W_SCL(0);
     delay_us(2);
 }

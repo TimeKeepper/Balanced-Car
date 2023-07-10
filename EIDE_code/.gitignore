@@ -13,3 +13,10 @@
 # eide template
 *.ept
 *.eide-template
+
+#something else
+./EIDE_code/src/app/bno055.h
+./EIDE_code/src/app/bno055.c
+./EIDE_code/src/app/bno055_support.c
+./EIDE_code/src/app/Mine_bno055.c
+./EIDE_code/src/app/Mine_bno055.h

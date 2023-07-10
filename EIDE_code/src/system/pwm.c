@@ -1,6 +1,14 @@
 #include "pwm.h"
 
-void PWM_Timer_Init(TIM_TypeDef* PWM_TIMx, GPIO_TypeDef* PWM_PORT, u16 PWM_GPIO_Pin_x,u8 PWM_Channel_x){
+static u16 PWM_TIMx_PERIOD = 0;
+static u16 PWM_TIMx_PRESCALER = 0;
+static TIM_TypeDef* LOC_PWM_TIMx = 0;
+
+void PWM_Timer_Init(TIM_TypeDef* PWM_TIMx, GPIO_TypeDef* PWM_PORT, u16 PWM_GPIO_Pin_x,u8 PWM_Channel_x,uint16_t PWM_TIM_PRESCALER,uint16_t PWM_TIM_PERIOD){
+    PWM_TIMx_PERIOD = PWM_TIM_PERIOD;
+    PWM_TIMx_PRESCALER = PWM_TIM_PRESCALER;
+    LOC_PWM_TIMx = PWM_TIMx;
+
     TIM_RCC_ENABLE(PWM_TIMx);
     GPIO_RCC_ENABLE(PWM_PORT);
 
@@ -12,8 +20,8 @@ void PWM_Timer_Init(TIM_TypeDef* PWM_TIMx, GPIO_TypeDef* PWM_PORT, u16 PWM_GPIO_
 
     TIM_InternalClockConfig(PWM_TIMx);
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-    TIM_TimeBaseStructure.TIM_Period = PWM_TIMx_PERIOD-1;
-    TIM_TimeBaseStructure.TIM_Prescaler = PWM_TIMx_PRESCALER-1;
+    TIM_TimeBaseStructure.TIM_Period = PWM_TIM_PERIOD-1;
+    TIM_TimeBaseStructure.TIM_Prescaler = PWM_TIM_PRESCALER-1;
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(PWM_TIMx, &TIM_TimeBaseStructure);
@@ -49,20 +57,20 @@ void PWM_Set_frequency(u32 PWM_Prescaler,TIM_TypeDef* PWM_TIMx){
     TIM_PrescalerConfig(PWM_TIMx, i, TIM_PSCReloadMode_Immediate);
 }
 
-void PWM_Set_Compare(u8 PWM_Compare,TIM_TypeDef* PWM_TIMx,u8 PWM_Channel_x){
+void PWM_Set_Compare(u8 PWM_Compare,u8 PWM_Channel_x){
     u16 i = PWM_TIMx_PERIOD*PWM_Compare/100;
     switch(PWM_Channel_x){
         case 1:
-            TIM_SetCompare1(PWM_TIMx, i);
+            TIM_SetCompare1(LOC_PWM_TIMx, i);
             break;
         case 2:
-            TIM_SetCompare2(PWM_TIMx, i);
+            TIM_SetCompare2(LOC_PWM_TIMx, i);
             break;
         case 3:
-            TIM_SetCompare3(PWM_TIMx, i);
+            TIM_SetCompare3(LOC_PWM_TIMx, i);
             break;
         case 4:
-            TIM_SetCompare4(PWM_TIMx, i);
+            TIM_SetCompare4(LOC_PWM_TIMx, i);
             break;
         default:
             break;

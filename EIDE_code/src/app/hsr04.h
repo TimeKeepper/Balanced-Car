@@ -30,7 +30,9 @@ void EXTI15_10_IRQHandler(void){
 5.Trust the hardware environment, suspect the software and yourself.
 6.ensure you're using STM32F103C8T6, althought it can use in GD32f103c8t6, but just some of them.if you find the code can not use in GD32, maybe it's the reason.
 7.if you have any question, please contact me by email
-8.the notice above is all my experience, it really waste tons of my time:(
+8.the HSR04's measure is not very correct, what I get is compeletly original data, You may need to do some processing reduce the misdeclaration rate.
+9.Suspect the hardware environment, trust the software and yourself.
+10.the notice above is all my experience, it really waste tons of my time:(
 */
 
 
